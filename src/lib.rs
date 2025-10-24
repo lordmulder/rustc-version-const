@@ -29,7 +29,7 @@
 ///
 /// This function returns just the plain version number *without* revision, e.g., `1.90.0`.
 pub const fn rustc_version() -> &'static str {
-    static RUSTC_VERSION: &str = env!("_RUSTC_VERSION_CONST");
+    const RUSTC_VERSION: &str = env!("_RUSTC_VERSION_CONST");
     RUSTC_VERSION
 }
 
@@ -37,6 +37,6 @@ pub const fn rustc_version() -> &'static str {
 ///
 /// This function returns the full version string, e.g., `rustc 1.90.0 (1159e78c4 2025-09-14)`.
 pub const fn rustc_version_full() -> &'static str {
-    static RUSTC_VERSION_FULL: &str = env!("_RUSTC_VERSION_CONST_FULL");
+    const RUSTC_VERSION_FULL: &str = env!("_RUSTC_VERSION_CONST_FULL");
     RUSTC_VERSION_FULL
 }

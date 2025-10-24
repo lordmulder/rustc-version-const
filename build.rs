@@ -18,7 +18,7 @@ fn main() {
         _ => panic!("Failed to determine rustc version!"),
     };
 
-    let version_line = version_output.lines().next().map(str::trim_ascii);
+    let version_line = version_output.lines().next().map(str::trim);
     let (prefix, version_string) = match version_line {
         Some(line) => match line.split_once(char::is_whitespace) {
             Some((prefix, version_string)) => (prefix, version_string),
@@ -29,7 +29,7 @@ fn main() {
 
     assert_eq!(prefix, "rustc", "The rustc version string starts with an unrecognized prefix!");
 
-    let version_string = version_string.trim_ascii_start();
+    let version_string = version_string.trim_start();
     let rustc_version = match version_string.split_once(char::is_whitespace) {
         Some((rustc_version, _)) => rustc_version,
         _ => panic!("Failed to extract rustc version number!"),
