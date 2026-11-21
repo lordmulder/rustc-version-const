@@ -11,12 +11,15 @@ fn trim_ostr(ostr: OsString) -> Option<OsString> {
 }
 
 fn main() {
-    let rustc_path = env::var_os("RUSTC_WRAPPER")
-        .and_then(trim_ostr)
-        .or_else(|| env::var_os("RUSTC").and_then(trim_ostr))
-        .expect("RUSTC is *not* defined!");
+    let rustc_path = env::var_os("RUSTC").and_then(trim_ostr).expect("RUSTC is *not* defined!");
+    let wrapper_path = env::var_os("RUSTC_WRAPPER").and_then(trim_ostr);
 
-    let version_output = match Command::new(rustc_path).arg("-V").output() {
+    let command = match wrapper_path {
+        Some(wrapper) => Command::new(wrapper).arg(rustc_path).arg("-V").output(),
+        None => Command::new(rustc_path).arg("-V").output(),
+    };
+
+    let version_output = match command {
         Ok(output) if output.status.success() => String::from_utf8_lossy(&output.stdout).into_owned(),
         _ => panic!("Failed to determine rustc version!"),
     };

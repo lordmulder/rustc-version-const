@@ -4,4 +4,4 @@ description = "Provides the rustc version as a const function at runtime (detect
 license = "0BSD"
 repository = "https://github.com/lordmulder/rustc-version-const"
 edition = "2021"
-version = "1.2.0"
+version = "1.2.1"
