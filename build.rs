@@ -1,19 +1,22 @@
 // SPDX-License-Identifier: 0BSD
 // rustc-version-const
-// Copyright (C) 2025 by LoRd_MuldeR <mulder2@gmx.de>
+// Copyright (C) 2026 by LoRd_MuldeR <mulder2@gmx.de>
 
 use std::{env, ffi::OsString, process::Command, str};
 
+#[inline]
+fn trim_ostr(ostr: OsString) -> Option<OsString> {
+    let trimmed = ostr.to_str().map(|str| OsString::from(str.trim_ascii())).unwrap_or(ostr);
+    Some(trimmed).filter(|str| !str.is_empty())
+}
+
 fn main() {
-    let rustc = env::var_os("RUSTC").filter(|str| !str.is_empty()).unwrap_or_else(|| OsString::from("rustc"));
-    let rustc_wrapper = env::var_os("RUSTC_WRAPPER").filter(|str| !str.is_empty());
+    let rustc_path = env::var_os("RUSTC_WRAPPER")
+        .and_then(trim_ostr)
+        .or_else(|| env::var_os("RUSTC").and_then(trim_ostr))
+        .expect("RUSTC is *not* defined!");
 
-    let result = match rustc_wrapper {
-        Some(wrapper) => Command::new(wrapper).arg(rustc).arg("-V").output(),
-        None => Command::new(rustc).arg("-V").output(),
-    };
-
-    let version_output = match result {
+    let version_output = match Command::new(rustc_path).arg("-V").output() {
         Ok(output) if output.status.success() => String::from_utf8_lossy(&output.stdout).into_owned(),
         _ => panic!("Failed to determine rustc version!"),
     };
@@ -29,7 +32,7 @@ fn main() {
 
     assert_eq!(prefix, "rustc", "The rustc version string starts with an unrecognized prefix!");
 
-    let version_string = version_string.trim_start();
+    let version_string = version_string.trim_ascii_start();
     let rustc_version = match version_string.split_once(char::is_whitespace) {
         Some((rustc_version, _)) => rustc_version,
         _ => panic!("Failed to extract rustc version number!"),

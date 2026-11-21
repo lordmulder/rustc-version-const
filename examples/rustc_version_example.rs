@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: 0BSD
 // rustc-version-const
-// Copyright (C) 2025 by LoRd_MuldeR <mulder2@gmx.de>
+// Copyright (C) 2026 by LoRd_MuldeR <mulder2@gmx.de>
 
 use rustc_version_const::{rustc_version, rustc_version_full};
 

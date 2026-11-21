@@ -3,7 +3,6 @@
 [![no_std](https://img.shields.io/badge/rust-no__std-orchid?logo=rust)](https://docs.rust-embedded.org/book/intro/no-std.html)
 [![Crates.io](https://img.shields.io/crates/v/rustc-version-const)](https://crates.io/crates/rustc-version-const)
 [![Downloads](https://img.shields.io/crates/d/rustc-version-const)](https://crates.io/crates/rustc-version-const)
-[![Release Date](https://img.shields.io/github/release-date/lordmulder/rustc-version-const)](https://crates.io/crates/rustc-version-const/versions)
 [![Docs.rs](https://img.shields.io/docsrs/rustc-version-const)](https://docs.rs/rustc-version-const/latest/)
 [![License](https://img.shields.io/crates/l/rustc-version-const)](https://opensource.org/license/0BSD)
 
@@ -19,7 +18,7 @@ In order to use this crate, you have to add it under `[dependencies]` to your **
 
 ```
 [dependencies]
-rustc-version-const = "1.0.0"
+rustc-version-const = "1.2.0"
 ```
 
 ### Usage
@@ -38,4 +37,4 @@ fn main() {
 
 This software is released under the BSD Zero Clause (“0BSD”) License.
 
-Copyright (C) 2025 by LoRd_MuldeR &lt;mulder2@gmx.de&gt;.
+Copyright (C) 2026 by LoRd_MuldeR &lt;mulder2@gmx.de&gt;.
