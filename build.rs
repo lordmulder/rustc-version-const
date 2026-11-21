@@ -2,6 +2,7 @@
 // rustc-version-const
 // Copyright (C) 2026 by LoRd_MuldeR <mulder2@gmx.de>
 
+use cfg_if::cfg_if;
 use std::{env, ffi::OsString, process::Command, str};
 
 #[inline]
@@ -12,14 +13,24 @@ fn trim_ostr(ostr: OsString) -> Option<OsString> {
 
 fn main() {
     let rustc_path = env::var_os("RUSTC").and_then(trim_ostr).expect("RUSTC is *not* defined!");
-    let wrapper_path = env::var_os("RUSTC_WRAPPER").and_then(trim_ostr);
 
-    let command = match wrapper_path {
-        Some(wrapper) => Command::new(wrapper).arg(rustc_path).arg("-V").output(),
-        None => Command::new(rustc_path).arg("-V").output(),
-    };
+    cfg_if! {
+        if #[cfg(feature = "wrapper")] {
+            let wrapper_path = env::var_os("RUSTC_WRAPPER").and_then(trim_ostr);
+            let mut command = match wrapper_path {
+                Some(wrapper) => {
+                    let mut command = Command::new(wrapper);
+                    command.arg(rustc_path);
+                    command
+                }
+                None => Command::new(rustc_path),
+            };
+        } else {
+            let mut command = Command::new(rustc_path);
+        }
+    }
 
-    let version_output = match command {
+    let version_output = match command.arg("-V").output() {
         Ok(output) if output.status.success() => String::from_utf8_lossy(&output.stdout).into_owned(),
         _ => panic!("Failed to determine rustc version!"),
     };

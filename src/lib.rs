@@ -24,6 +24,10 @@
 //!    println!("rustc version: \"{}\"", RUSTC_VERSION);
 //! }
 //! ```
+//!
+//! ### Features
+//!
+//! Optional feature `wrapper` (enabled by default) enables [`RUSTC_WRAPPER`](https://doc.rust-lang.org/cargo/reference/environment-variables.html) support.
 
 /// Returns the `rustc` version that was used to build this application
 ///

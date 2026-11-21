@@ -14,11 +14,11 @@ This crate is `#![no_std]` and does *not* require any additional dependencies.
 
 ### Installation
 
-In order to use this crate, you have to add it under `[dependencies]` to your **`Cargo.toml`**:
+To use this crate, add it under `[dependencies]` to your **`Cargo.toml`**:
 
 ```
 [dependencies]
-rustc-version-const = "1.2.0"
+rustc-version-const = "1.2.2"
 ```
 
 ### Usage
